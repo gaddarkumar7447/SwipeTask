@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SwipeTask</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_type">Product Type</string>
+    <string name="product_prize">Product Prize</string>
+    <string name="product_tax">Product Tax</string>
+    <string name="data_add_successful">Data Add successful</string>
+    <string name="submit">Submit</string>
+</resources>
