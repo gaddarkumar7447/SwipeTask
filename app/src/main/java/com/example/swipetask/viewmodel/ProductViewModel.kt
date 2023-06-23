@@ -5,12 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.swipetask.model.ProductDetails
-import com.example.swipetask.model.ProductDetailsItem
 import com.example.swipetask.modelproductadd.AddProductItem
 import com.example.swipetask.repo.Repository
 import com.example.swipetask.utilities.ApiResponce
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class ProductViewModel(private val repository: Repository) : ViewModel() {
 
@@ -25,11 +23,11 @@ class ProductViewModel(private val repository: Repository) : ViewModel() {
     private val addProductData : MutableLiveData<ApiResponce<AddProductItem>> = MutableLiveData()
     val productLiveData : LiveData<ApiResponce<AddProductItem>> = addProductData
 
-    fun addProductDetails(productDetailsItem: ProductDetailsItem){
+    fun addProductDetails(productName : String, productType: String, price : Double, tax : Double){
         viewModelScope.launch {
             addProductData.postValue(ApiResponce.Loading())
             try {
-                val responce = repository.addProductData(productDetailsItem).body()
+                val responce = repository.addProductData(productName, productType, price, tax).body()
                 if (responce?.success == true){
                     addProductData.postValue(ApiResponce.Successful(responce))
                 }else{
@@ -39,6 +37,5 @@ class ProductViewModel(private val repository: Repository) : ViewModel() {
                 addProductData.postValue(ApiResponce.Error("Somethings went to wrong"))
             }
         }
-
     }
 }

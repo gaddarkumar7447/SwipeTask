@@ -74,8 +74,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeViewModel() {
-        val apiInstance = ApiInstance.getApiIntence(this).create(ApiServices::class.java)
-        viewModel = ViewModelProvider(this, ProductViewModelFactory(Repository(apiInstance)))[ProductViewModel::class.java]
+        val apiInstance = ApiInstance.getApiIntence().create(ApiServices::class.java)
+        viewModel = ViewModelProvider(this, ProductViewModelFactory(Repository(apiInstance, this)))[ProductViewModel::class.java]
     }
 
     private fun searchData() {
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 val filteredUsers = productDetailsItem.filter { data ->
-                    data.product_name.contains(p0.toString()) ?: false || data.product_type.contains(p0.toString()) ?: false
+                    data.product_name.contains(p0.toString()) || data.product_type.contains(p0.toString())
                 }
                 if (filteredUsers.isEmpty()) {
                     Snackbar.make(binding.root, "No data found ${p0.toString()}", Snackbar.LENGTH_LONG).show()
@@ -96,6 +96,10 @@ class MainActivity : AppCompatActivity() {
 
             override fun afterTextChanged(p0: Editable?) {}
         })
+    }
+    override fun onRestart() {
+        super.onRestart()
+        viewModel.getLiveData()
     }
 }
 

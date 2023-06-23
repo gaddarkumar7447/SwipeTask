@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.swipetask.databinding.ActivityAddItemBinding
-import com.example.swipetask.model.ProductDetailsItem
 import com.example.swipetask.network.ApiInstance
 import com.example.swipetask.network.ApiServices
 import com.example.swipetask.repo.Repository
@@ -32,7 +31,7 @@ class AddItemActivity : AppCompatActivity() {
             val tax = binding.productTax.text.toString()
 
             if (name.isNotEmpty() && type.isNotEmpty() && prize.isNotEmpty() && tax.isNotEmpty()){
-                viewModel.addProductDetails(ProductDetailsItem("",prize.toDouble(), name, type, tax.toDouble()))
+                viewModel.addProductDetails(name, type, prize.toDouble(), tax.toDouble())
 
                 viewModel.productLiveData.observe(this, Observer {
                     when(it){
@@ -40,9 +39,15 @@ class AddItemActivity : AppCompatActivity() {
                             binding.progressbar.visibility = View.VISIBLE
                         }
                         is ApiResponce.Successful ->{
+                            binding.showResponceData.visibility = View.VISIBLE
                             binding.progressbar.visibility = View.GONE
                             binding.success.visibility = View.VISIBLE
                             binding.showResponceData.text = it.data.toString()
+
+                            binding.productName.text.clear()
+                            binding.productType.text.clear()
+                            binding.productPrize.text.clear()
+                            binding.productTax.text.clear()
                         }
                         is ApiResponce.Error ->{
                             binding.progressbar.visibility = View.GONE
@@ -57,7 +62,7 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     private fun initializeViewModel() {
-        val apiInstance = ApiInstance.getApiIntence(this).create(ApiServices::class.java)
-        viewModel = ViewModelProvider(this, ProductViewModelFactory(Repository(apiInstance)))[ProductViewModel::class.java]
+        val apiInstance = ApiInstance.getApiIntence().create(ApiServices::class.java)
+        viewModel = ViewModelProvider(this, ProductViewModelFactory(Repository(apiInstance, this)))[ProductViewModel::class.java]
     }
 }
