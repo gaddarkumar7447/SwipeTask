@@ -1,6 +1,6 @@
 # SwipeTask
 
-This is an Android Application based on MVVM Architecture that for fetch and post data from API.
+This is an Android Application based on MVVM Architecture for fetching and posting data from API.
 
 https://github.com/gaddarkumar7447/SwipeTask/assets/74999138/78c88b01-9c17-4e85-b6e0-1ccb237b1178
 
