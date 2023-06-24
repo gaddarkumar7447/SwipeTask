@@ -8,13 +8,15 @@ https://github.com/gaddarkumar7447/SwipeTask/assets/74999138/78c88b01-9c17-4e85-
 # Built With
 + Kotlin
 + MVVM Architecture
-+ Retrofit (for API Calling).
-+ Progress Bar.
++ Retrofit (for API Calling)
++ Progress Bar
++ Sealed Classes
 + Glide for image
-+ Kotlin Coroutines.
++ Kotlin Coroutines
 + Live Data
 + Filtering Data
 + Post Data
++ Network Availability
 
 
 # Benefits of using MVVM Architecture
